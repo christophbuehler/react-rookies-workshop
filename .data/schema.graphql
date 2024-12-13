@@ -1,0 +1,36 @@
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
+type Question {
+  id: ID!
+  title: String!
+  question_order: Int!
+}
+
+type Survey {
+  id: ID!
+  number: Int!
+  title: String!
+  questions: [Question!]!
+}
+
+type Query {
+  surveys: [Survey!]!
+  survey(id: ID!): Survey
+}
+
+input SurveyQuestionInput {
+  title: String!
+}
+
+input SurveyResponseInput {
+  survey_question_id: ID!
+  response: String!
+}
+
+type Mutation {
+  addSurvey(number: Int!, title: String!, questions: [String!]!): Survey!
+  submitSurveyResponse(surveyId: ID!, responses: [SurveyResponseInput!]!): ID!
+}

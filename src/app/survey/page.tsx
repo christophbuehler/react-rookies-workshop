@@ -1,24 +1,19 @@
-"use client";
-
+import { SurveyHost } from "@/components/survery-host";
+import { SurveyQuestion } from "@/components/survey-question";
+import { MultipleChoiceQuestionDefinition } from "@/components/survey-question-multiple-choice";
 import { Toolbar } from "@/components/toolbar";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useId } from "react";
 
 export default () => {
-  const id = useId();
   return (
     <>
-      <div className="flex flex-col gap-4">
-        <label htmlFor={id + "-title"}>Survey Title</label>
-        <Input type="email" placeholder="My awesome survey" />
-      </div>
-      <hr className="bg-primary" />
-      <Toolbar title="Create a Survey" />
-      enter title:
+      <Toolbar />
+      <SurveyHost isEdit={true} />
+      {/* 
       <div className="flex flex-col gap-8 items-start">
         <Button>Add Question</Button>
-      </div>
+      </div> */}
       {/* <Button onClick={() => create()}>Create Survey</Button> */}
     </>
   );

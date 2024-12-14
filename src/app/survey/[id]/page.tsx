@@ -1,18 +1,7 @@
-"use client";
+import { getClient } from "@/lib/api";
+import { gql } from "@apollo/client";
 
-import { Toolbar } from "@/components/toolbar";
-import { Button } from "@/components/ui/button";
-import {
-  graphql,
-  loadQuery,
-  PreloadedQuery,
-  usePreloadedQuery,
-} from "react-relay";
-import environment from "../../../relay/environment";
-import { Suspense } from "react";
-import { OperationType } from "relay-runtime";
-
-const SurveyQuery = graphql`
+const surveyQuery = gql`
   query pageSurveyQuery($surveyId: ID!) {
     survey(id: $surveyId) {
       title
@@ -20,34 +9,54 @@ const SurveyQuery = graphql`
   }
 `;
 
-const preloadedSurveyQuery = loadQuery(environment, SurveyQuery, {
-  surveyId: 4,
-});
-
-export default () => {
-  return (
-    <>
-      <Toolbar title="My Survey" />
-      {/* {surveys} */}
-      <Button>Save</Button>
-
-      <Suspense fallback={<div>Loading survey...</div>}>
-        <SurveyComponent preloadedQuery={preloadedSurveyQuery} />
-      </Suspense>
-    </>
-  );
+export default async () => {
+  const { data } = await getClient().query({
+    query: surveyQuery,
+    variables: {
+      surveyId: 4,
+    },
+    // context: {
+    //   fetchOptions: {
+    //     next: { revlidte: 10 },
+    //   },
+    // },
+  });
+  return <>hello: {JSON.stringify(data)}</>;
 };
 
-const SurveyComponent = ({
-  preloadedQuery,
-}: {
-  preloadedQuery: PreloadedQuery<OperationType, {}>;
-}) => {
-  const data = usePreloadedQuery(SurveyQuery, preloadedQuery);
+// import { Toolbar } from "@/components/toolbar";
+// import { Button } from "@/components/ui/button";
+// import {
+//   graphql,
+//   loadQuery,
+//   PreloadedQuery,
+//   RelayEnvironmentProvider,
+//   usePreloadedQuery,
+// } from "react-relay";
+// import environment from "../../../relay/environment";
+// import { Suspense } from "react";
+// import { OperationType } from "relay-runtime";
 
-  return (
-    <div>
-      <h1>Survey : {JSON.stringify(data)}</h1>
-    </div>
-  );
-};
+// const preloadedQuery = loadQuery(environment, SurveyQuery, {
+//   surveyId: 4,
+// });
+// export default async () => {
+//   // const data = usePreloadedQuery(SurveyQuery, preloadedSurveyQuery);
+
+//   return (
+//     <>
+//       {/* <Toolbar title="My Survey" /> */}
+//       {/* {surveys} */}
+//       {/* <Button>Save</Button> */}
+//       hellp
+//       {/* <Suspense fallback={<div>Loading survey...</div>}> */}
+//       HIII
+//       <SurveyComponent preloadedQuery={preloadedQuery} />
+//       {/* </Suspense> */}
+//     </>
+//   );
+// };
+
+// {
+//   /* <main className="mx-auto container my-4"></main> */
+// }

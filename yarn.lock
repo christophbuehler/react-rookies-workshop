@@ -21,7 +21,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:~3.2.5 || ~3.3.0 || ~3.4.0 || ~3.5.0 || ~3.6.0 || ~3.7.0 || ~3.8.0 || ~3.9.0 || ~3.10.0 || ~3.11.0 || ~3.12.0":
+"@apollo/client-react-streaming@npm:0.11.7":
+  version: 0.11.7
+  resolution: "@apollo/client-react-streaming@npm:0.11.7"
+  dependencies:
+    ts-invariant: "npm:^0.10.3"
+  peerDependencies:
+    "@apollo/client": ^3.10.4
+    react: ^18 || >=19.0.0-rc
+  checksum: 10c0/c6db792c447c09215fe38d320b75707efe7a810f68d518160be50dbc41191f0950bfc2f53ea8cdd03d6e126a933d2140e5ae72393182d0e7f0c10fb30115b6a9
+  languageName: node
+  linkType: hard
+
+"@apollo/client@npm:^3.12.3, @apollo/client@npm:~3.2.5 || ~3.3.0 || ~3.4.0 || ~3.5.0 || ~3.6.0 || ~3.7.0 || ~3.8.0 || ~3.9.0 || ~3.10.0 || ~3.11.0 || ~3.12.0":
   version: 3.12.3
   resolution: "@apollo/client@npm:3.12.3"
   dependencies:
@@ -55,6 +67,19 @@ __metadata:
     subscriptions-transport-ws:
       optional: true
   checksum: 10c0/fea18d712de44f46898f8ee39ce5e80b7c3c0a3caa69285971133dbdfc21970f35c156ad1e4e4fcb2da5e72f57d3719cfabefc9d41b55957ff9a70a6bc867fdc
+  languageName: node
+  linkType: hard
+
+"@apollo/experimental-nextjs-app-support@npm:^0.11.7":
+  version: 0.11.7
+  resolution: "@apollo/experimental-nextjs-app-support@npm:0.11.7"
+  dependencies:
+    "@apollo/client-react-streaming": "npm:0.11.7"
+  peerDependencies:
+    "@apollo/client": ^3.10.4
+    next: ^13.4.1 || ^14.0.0 || ^15.0.0-rc.0
+    react: ^18 || >=19.0.0-rc
+  checksum: 10c0/c3c92868f661af351e77c789bab8ac3d4ad943b1642e85a8ec9eda5cecfc471fe4f09a03b103c770af7edbbf32b6e4e4bec9fa0cc0d705d2e2781af1e9e2bee0
   languageName: node
   linkType: hard
 
@@ -6032,6 +6057,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-rookies-workshop@workspace:."
   dependencies:
+    "@apollo/client": "npm:^3.12.3"
+    "@apollo/experimental-nextjs-app-support": "npm:^0.11.7"
     "@apollo/server": "npm:^4.11.2"
     "@as-integrations/next": "npm:^3.2.0"
     "@babel/runtime": "npm:^7.26.0"

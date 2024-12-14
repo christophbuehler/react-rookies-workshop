@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { RelayEnvironmentProvider } from "react-relay";
+import environment from "@/relay/environment";
+import RelayClientProvider from "@/components/relay-client-provider";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -28,9 +31,11 @@ export default function RootLayout({
       <body
       // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider defaultTheme="dark">
-          <main className="mx-auto container my-4">{children}</main>
-        </ThemeProvider>
+        <RelayClientProvider>
+          <ThemeProvider defaultTheme="dark">
+            <main className="mx-auto container my-4">{children}</main>
+          </ThemeProvider>
+        </RelayClientProvider>
       </body>
     </html>
   );

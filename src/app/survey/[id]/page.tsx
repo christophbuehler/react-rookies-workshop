@@ -2,8 +2,15 @@
 
 import { Toolbar } from "@/components/toolbar";
 import { Button } from "@/components/ui/button";
-import { graphql, QueryRenderer } from "react-relay";
+import {
+  graphql,
+  loadQuery,
+  PreloadedQuery,
+  usePreloadedQuery,
+} from "react-relay";
 import environment from "../../../relay/environment";
+import { Suspense } from "react";
+import { OperationType } from "relay-runtime";
 
 const SurveyQuery = graphql`
   query pageSurveyQuery($surveyId: ID!) {
@@ -13,30 +20,34 @@ const SurveyQuery = graphql`
   }
 `;
 
-export default async () => {
-  // const surveys = await getAllSurveys();
+const preloadedSurveyQuery = loadQuery(environment, SurveyQuery, {
+  surveyId: 4,
+});
 
+export default () => {
   return (
     <>
       <Toolbar title="My Survey" />
       {/* {surveys} */}
       <Button>Save</Button>
 
-      <QueryRenderer
-        environment={environment}
-        query={SurveyQuery}
-        variables={{ surveyId: 2 }}
-        render={({ error, props }) => {
-          if (error) {
-            return <div>Error: {error.message}</div>;
-          }
-          if (!props) {
-            return <div>Loading...</div>;
-          }
-          // Render your component with the fetched data
-          return <div>Data: {JSON.stringify(props)}</div>;
-        }}
-      />
+      <Suspense fallback={<div>Loading survey...</div>}>
+        <SurveyComponent preloadedQuery={preloadedSurveyQuery} />
+      </Suspense>
     </>
+  );
+};
+
+const SurveyComponent = ({
+  preloadedQuery,
+}: {
+  preloadedQuery: PreloadedQuery<OperationType, {}>;
+}) => {
+  const data = usePreloadedQuery(SurveyQuery, preloadedQuery);
+
+  return (
+    <div>
+      <h1>Survey : {JSON.stringify(data)}</h1>
+    </div>
   );
 };

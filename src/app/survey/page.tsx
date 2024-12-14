@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useId } from "react";
 
-// import { graphql, useLazyLoadQuery } from "react-relay";
-
 export default () => {
   const id = useId();
   return (

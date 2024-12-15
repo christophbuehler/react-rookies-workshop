@@ -90,14 +90,14 @@ export const SurveyQuestionMultipleChoice = ({
   const myState = state[questionId] as MultipleChoiceState;
 
   const dispatchData = (action: DataAction) =>
-    dispatchSurveyData({
+    dispatchSurveyData!({
       type: "set",
       questionId: questionId,
       data: dataReducer(myData, action),
     });
 
   const dispatchState = (action: StateAction) =>
-    dispatchSurveyState({
+    dispatchSurveyState!({
       type: "set",
       questionId: questionId,
       state: stateReducer(myState, action),

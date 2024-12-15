@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query survey($surveyId: ID!) {\n    survey(id: $surveyId) {\n      title\n    }\n  }\n": types.SurveyDocument,
+    "\n mutation Mutation($number: Int!, $title: String!, $questions: [String!]!) {\n    addSurvey(number: $number, title: $title, questions: $questions) {\n      id\n      number\n      questions {\n        id\n        question_order\n        title\n      }\n    }\n  }\n": types.MutationDocument,
 };
 
 /**
@@ -35,6 +36,10 @@ export function gql(source: string): unknown;
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query survey($surveyId: ID!) {\n    survey(id: $surveyId) {\n      title\n    }\n  }\n"): (typeof documents)["\n  query survey($surveyId: ID!) {\n    survey(id: $surveyId) {\n      title\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n mutation Mutation($number: Int!, $title: String!, $questions: [String!]!) {\n    addSurvey(number: $number, title: $title, questions: $questions) {\n      id\n      number\n      questions {\n        id\n        question_order\n        title\n      }\n    }\n  }\n"): (typeof documents)["\n mutation Mutation($number: Int!, $title: String!, $questions: [String!]!) {\n    addSurvey(number: $number, title: $title, questions: $questions) {\n      id\n      number\n      questions {\n        id\n        question_order\n        title\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

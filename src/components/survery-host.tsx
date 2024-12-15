@@ -12,6 +12,9 @@ import { Input } from "./ui/input";
 import { BaseQuestion, SurveyQuestion } from "./survey-question";
 import { Button } from "./ui/button";
 import React from "react";
+import { ApolloProvider, useMutation } from "@apollo/client";
+import { gql } from "@generated/gql";
+import { getClient } from "@/lib/api";
 
 export interface SurveyHostProps {
   isEdit: boolean;
@@ -21,7 +24,9 @@ export const SurveyHost = ({ isEdit }: SurveyHostProps) => {
   return (
     <SurveyStateProvider>
       <SurveyDataProvider>
-        <SurveyHostBody isEdit={isEdit} />
+        <ApolloProvider client={getClient()}>
+          <SurveyHostBody isEdit={isEdit} />
+        </ApolloProvider>
       </SurveyDataProvider>
     </SurveyStateProvider>
   );
@@ -80,9 +85,34 @@ export const SurveyStateProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+const addSurveyMutation = gql(`
+ mutation Mutation($number: Int!, $title: String!, $questions: [String!]!) {
+    addSurvey(number: $number, title: $title, questions: $questions) {
+      id
+      number
+      questions {
+        id
+        question_order
+        title
+      }
+    }
+  }
+`);
+
 const SurveyHostBody = ({ isEdit }: SurveyHostProps) => {
   const [surveyData, dispatchSurveyData] = useContext(SurveyDataContext);
   const [surveyState] = useContext(SurveyStateContext);
+  // const [addSurvey, { data, loading, error }] = useMutation(addSurveyMutation);
+
+  // function createSurvey() {
+  //   const variables = {
+  //     number: 1,
+  //     title: "Sample Survey",
+  //     questions: ["Question 1", "Question 2"],
+  //   };
+
+  //   addSurvey({ variables });
+  // }
 
   return (
     <>
@@ -117,6 +147,8 @@ const SurveyHostBody = ({ isEdit }: SurveyHostProps) => {
         >
           Add Question
         </Button>
+
+        {/* <Button onClick={() => createSurvey()}>CREATE THE SURVEY??</Button> */}
       </div>
     </>
   );
